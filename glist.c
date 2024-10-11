@@ -29,7 +29,7 @@ struct glist {
             } while (1); \
             if(*err != 0) { printf("[x] fatal_err: unknown error.\n"); } \
         }
-/* Erase the while linked list. */
+/* Erase the whole linked list. */
 #define GL_DESTROY_LIST(p_head, type) \
         if (p_head == NULL) { printf("[x] fatal_err: null p_head.\n"); } \
         else if(*p_head == NULL) { printf("[!] warn_info: null head, empty list.\n"); } \
