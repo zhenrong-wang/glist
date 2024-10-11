@@ -27,8 +27,6 @@ You need a C compiler to build.
 
 # 4 Bugs and Communications
 
-This code was written years ago, and I didn't continuously develop it. Therefore, bugs may occur. 
-
 If you are interested in this project, please submit issues to this repo. I'd be glad to communicate on any issues.
 
 Or, you can also email me: zhenrongwang@live.com
