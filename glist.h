@@ -34,6 +34,9 @@ struct glist {
 /* Get node data type, return a type pointer. */
 #define GL_GET_NODE_TYPE(p_node, type) ((type *)((char *)(p_node) + sizeof(struct glist)))
 
+#define GL_PRINT_GENERAL_INFO(summary_msg) \
+        printf("\n[i] %s", summary_msg);
+
 /* Append a node to an existed list. */
 #define GL_APPEND_NODE(p_head, p_node, type, p_err) \
         if (p_head == NULL) { printf("[x] fatal_err: null head.\n"); *p_err = NULL_HEAD_ERR; } \
@@ -59,7 +62,7 @@ struct glist {
  * Generic print function. You need to implement a type-specific print function with format:
  * 
  * void print_type(type *p, size_t index) {
- *      printf("...") ...
+ *      //... using printf() or other methods.
  * }
  * 
  */
