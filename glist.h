@@ -104,8 +104,7 @@ struct glist {
 
 #define GL_PRINT_ALL_NODES(p_head, type, p_print_func, p_err) \
         if (p_head == NULL) GL_PRINT_EMPTY_WARN(p_err) \
-        else { \
-            struct glist *tmp = p_head; size_t i = 0; \
+        else { struct glist *tmp = p_head; size_t i = 0; \
             do { \
                 GENERIC_PRINT(tmp, i, type, p_print_func); \
                 i++; tmp = tmp->next; \
