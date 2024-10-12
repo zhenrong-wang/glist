@@ -38,6 +38,8 @@ int main (int argc, char **argv) {
 
     struct glist *ptr0 = GL_NEW_NODE(struct point, &err_flag);
     GL_PRINT_GENERAL_INFO("created the head node (node 0).\n");
+
+    struct glist *head = ptr0;
     struct point *p0 = GL_GET_NODE_TYPE(ptr0, struct point);
     set_point(p0, 10, 10);
 
@@ -45,35 +47,35 @@ int main (int argc, char **argv) {
     GL_PRINT_GENERAL_INFO("created node 1.\n");
     struct point *p1 = GL_GET_NODE_TYPE(ptr1, struct point);
     set_point(p1, 20, 20);
-    printf("[i] node num: %lu\n", GL_GET_NODE_NUM(ptr0));
+    printf("[i] node num: %lu\n", GL_GET_NODE_NUM(head));
 
-    GL_APPEND_NODE(ptr0, ptr1, struct point, &err_flag);
+    GL_APPEND_NODE(head, ptr1, struct point, &err_flag);
     GL_PRINT_GENERAL_INFO("node 1 appended to the list.\n");
-    printf("[i] node num: %lu\n", GL_GET_NODE_NUM(ptr0));
+    printf("[i] node num: %lu\n", GL_GET_NODE_NUM(head));
     
-    GL_PRINT_ALL_NODES(ptr0, struct point, print_point, &err_flag);
+    GL_PRINT_ALL_NODES(head, struct point, print_point, &err_flag);
 
     struct glist *ptr2 = GL_NEW_NODE(struct point, &err_flag);
     GL_PRINT_GENERAL_INFO("created node 2.\n");
     struct point *p2 = GL_GET_NODE_TYPE(ptr2, struct point);
     set_point(p2, 30, 30);
 
-    GL_INSERT_NODE(&ptr0, -1, ptr2, struct point, &err_flag);
-    GL_INSERT_NODE(&ptr0, 1, ptr2, struct point, &err_flag);
+    GL_INSERT_NODE(&head, -1, ptr2, struct point, &err_flag);
+    GL_INSERT_NODE(&head, 1, ptr2, struct point, &err_flag);
     GL_PRINT_GENERAL_INFO("node 2 inserted at position 1.\n");
 
-    GL_PRINT_ALL_NODES(ptr0, struct point, print_point, &err_flag);
-    GL_DELETE_NODE(&ptr0, 1, struct point, &err_flag);
+    GL_PRINT_ALL_NODES(head, struct point, print_point, &err_flag);
+    GL_DELETE_NODE(&head, 1, struct point, &err_flag);
     GL_PRINT_GENERAL_INFO("node 1 deleted.\n");
-    GL_PRINT_ALL_NODES(ptr0, struct point, print_point, &err_flag);
+    GL_PRINT_ALL_NODES(head, struct point, print_point, &err_flag);
 
-    GL_DELETE_NODE(&ptr0, 1, struct point, &err_flag);
+    GL_DELETE_NODE(&head, 1, struct point, &err_flag);
     GL_PRINT_GENERAL_INFO("node 1 deleted.\n");
-    GL_DELETE_NODE(&ptr0, 1, struct point, &err_flag);
-    GL_PRINT_ALL_NODES(ptr0, struct point, print_point, &err_flag);
+    GL_DELETE_NODE(&head, 1, struct point, &err_flag);
+    GL_PRINT_ALL_NODES(head, struct point, print_point, &err_flag);
 
-    GL_DESTROY_LIST(&ptr0, struct point, &err_flag);
+    GL_DESTROY_LIST(&head, struct point, &err_flag);
 
-    GL_PRINT_ALL_NODES(ptr0, struct point, print_point, &err_flag);
+    GL_PRINT_ALL_NODES(head, struct point, print_point, &err_flag);
 }
 
