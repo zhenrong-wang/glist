@@ -52,12 +52,12 @@ struct glist {
         position, max_idx, max_idx + 1); *p_err = POSITION_OOB; }
 
 #define GL_PRINT_EMPTY_WARN(p_err) \
-        { printf("[!] warn_info: null head, empty list.\n"); *p_err = EMPTY_LIST_WARN }
+        { printf("[!] warn_info: null head, empty list.\n"); *p_err = EMPTY_LIST_WARN; }
 
 /* Append a node to an existed list. */
 #define GL_APPEND_NODE(p_head, p_node, type, p_err) \
         if (p_head == NULL) GL_PRINT_NULL_HEAD_ERR(p_err) \
-        else if (p_node == NULL) GL_PRINT_NULL_NODE_ERR \
+        else if (p_node == NULL) GL_PRINT_NULL_NODE_ERR(p_err) \
         else { struct glist *tmp = p_head; \
             do { \
                 if (tmp->next == NULL) { tmp->next = p_node; *p_err = SUCCESS_CALL; break; } \
@@ -67,8 +67,8 @@ struct glist {
 
 /* Erase the whole linked list. */
 #define GL_DESTROY_LIST(pp_head, type, p_err) \
-        if (pp_head == NULL) GL_PRINT_NULL_P_HEAD_ERR \
-        else if (*pp_head == NULL) GL_PRINT_EMPTY_WARN \
+        if (pp_head == NULL) GL_PRINT_NULL_P_HEAD_ERR(p_err) \
+        else if (*pp_head == NULL) GL_PRINT_EMPTY_WARN(p_err) \
         else { struct glist *tmp = *pp_head, *tmp_next; \
             do { \
                 if (tmp == NULL) { break; } tmp_next = tmp->next; free(tmp); tmp = tmp_next; \
@@ -87,7 +87,7 @@ struct glist {
         p_print_func(GL_GET_NODE_TYPE(node, type), node_idx);
 
 #define GL_PRINT_ELEMENT(p_head, position, type, p_print_func, p_err) \
-        if (p_head == NULL) GL_PRINT_EMPTY_WARN \
+        if (p_head == NULL) GL_PRINT_EMPTY_WARN(p_err) \
         else { \
             struct glist *tmp = p_head; size_t i = 0; \
             do { \
@@ -103,7 +103,7 @@ struct glist {
         }
 
 #define GL_PRINT_ALL_NODES(p_head, type, p_print_func, p_err) \
-        if (p_head == NULL) GL_PRINT_EMPTY_WARN \
+        if (p_head == NULL) GL_PRINT_EMPTY_WARN(p_err) \
         else { \
             struct glist *tmp = p_head; size_t i = 0; \
             do { \

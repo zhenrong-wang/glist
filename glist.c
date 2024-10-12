@@ -38,7 +38,7 @@ int main (int argc, char **argv) {
     /* Test the APPEND_NODE macro. It should print an error msg. */
     GL_APPEND_NODE(NULL, NULL, struct point, &err_flag);
     /* Test the DESTROY_LIST macro. It should print an error msg. */
-    GL_DESTROY_LIST((struct glist **)NULL, struct point);
+    GL_DESTROY_LIST((struct glist **)NULL, struct point, &err_flag);
     printf("[i] node num: %lu\n", GL_GET_NODE_NUM(NULL));
 
     struct glist *ptr0 = GL_NEW_NODE(struct point, &err_flag);
@@ -77,7 +77,7 @@ int main (int argc, char **argv) {
     GL_DELETE_NODE(&ptr0, 1, struct point, &err_flag);
     GL_PRINT_ALL_NODES(ptr0, struct point, print_point, &err_flag);
 
-    GL_DESTROY_LIST(&ptr0, struct point);
+    GL_DESTROY_LIST(&ptr0, struct point, &err_flag);
 
     GL_PRINT_ALL_NODES(ptr0, struct point, print_point, &err_flag);
 }
