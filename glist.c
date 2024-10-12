@@ -6,12 +6,7 @@
 #include <stdio.h>
 #include "glist.h"
 
-
-/**
- * An example data type. 
- * Convention: Any data type MUST wrap its functions into the struct 
- *             using function pointers.
- */
+/* An example data type. */
 struct point {
     float x;
     float y;
