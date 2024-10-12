@@ -37,6 +37,10 @@ struct glist {
 #define GL_PRINT_GENERAL_INFO(summary_msg) \
         printf("\n[i] %s", summary_msg);
 
+#define GL_PRINT_OOB_ERR(position, max_idx, p_err) \
+        printf("[x] fatal_err: pos_idx: %d, max_idx %lu, total_elem %lu.\n", \
+        position, max_idx, max_idx + 1); *p_err = POSITION_OOB;
+
 /* Append a node to an existed list. */
 #define GL_APPEND_NODE(p_head, p_node, type, p_err) \
         if (p_head == NULL) { printf("[x] fatal_err: null head.\n"); *p_err = NULL_HEAD_ERR; } \
@@ -79,8 +83,7 @@ struct glist {
                     *p_err = SUCCESS_CALL; break; \
                 } \
                 if (tmp->next == NULL) { \
-                    printf("[x] fatal_err: pos_idx: %d, max_idx %lu, total_elem %lu.\n", \
-                    position, i, i+1); *p_err = POSITION_OOB; break; \
+                    GL_PRINT_OOB_ERR(position, i, p_err); break; \
                 } \
                 tmp = tmp->next; i++; \
             } while(1); \
@@ -106,10 +109,7 @@ struct glist {
 
 #define GL_INSERT_NODE(pp_head, position, p_node, type, p_err) ({ \
         size_t node_num = GL_GET_NODE_NUM(*pp_head); \
-        if (position < 0 || position >= node_num) { \
-            printf("[x] fatal_err: pos_idx: %d, max_idx %lu, total_elem %lu.\n", \
-            position, node_num - 1, node_num); *p_err = POSITION_OOB; \
-        } \
+        if (position < 0 || position >= node_num) { GL_PRINT_OOB_ERR(position, node_num - 1, p_err); } \
         else if (position == 0) { \
             struct glist *tmp = *pp_head; *pp_head = p_node; p_node->next = tmp; *p_err = SUCCESS_CALL; \
         } \
@@ -125,10 +125,7 @@ struct glist {
 
 #define GL_DELETE_NODE(pp_head, position, type, p_err) ({ \
         size_t node_num = GL_GET_NODE_NUM(*pp_head); \
-        if (position < 0 || position >= node_num) { \
-            printf("[x] fatal_err: pos_idx: %d, max_idx %lu, total_elem %lu.\n", \
-            position, node_num - 1, node_num); *p_err = POSITION_OOB; \
-        } \
+        if (position < 0 || position >= node_num) { GL_PRINT_OOB_ERR(position, node_num - 1, p_err); } \
         else if (position == 0) { \
             struct glist *tmp = *pp_head; *pp_head = *pp_head->next; free(tmp); *p_err = SUCCESS_CALL; \
         } \
