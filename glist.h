@@ -76,11 +76,20 @@ struct glist {
         }
 
 /**
- * Generic print function. You need to implement a type-specific print function with format:
+ * Generic print function. You need to implement a type-specific 
+ * print function with format:
  * 
  * void print_type(type *p, size_t index) {
- *      //... using printf() or other methods.
+ *     ...
  * }
+ * 
+ * Example:
+ *  void print_point (struct point *point_ptr, size_t position) {
+ *      if(position == 0) {
+ *          printf("[i] all the list nodes:\n");
+ *      }
+ *      printf(" +- Point %lu (x, y):\t (%lf, %lf)\n", position, point_ptr->x, point_ptr->y);
+ *  }
  * 
  */
 #define GENERIC_PRINT(node, node_idx, type, p_print_func) \
