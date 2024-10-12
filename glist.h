@@ -55,13 +55,24 @@ struct glist {
             } while (1); *pp_head = NULL; \
         }
 
-#define GL_PRINT_ELEMENT(p_head, position, type, p_err) \
+/**
+ * Generic print function. You need to implement a type-specific print function with format:
+ * 
+ * void print_type(type *p, size_t index) {
+ *      printf("...") ...
+ * }
+ * 
+ */
+#define GENERIC_PRINT(node, node_idx, type, p_print_func) \
+        p_print_func(GL_GET_NODE_TYPE(node, type), node_idx);
+
+#define GL_PRINT_ELEMENT(p_head, position, type, p_print_func, p_err) \
         if (p_head == NULL) { printf("[!] warn_info: null head, empty list.\n"); *p_err = NULL_HEAD_ERR; } \
         else { \
             struct glist *tmp = p_head; size_t i = 0; \
             do { \
                 if (i == position) { \
-                    GL_GET_NODE_TYPE(tmp, type)->print_elem_func(GL_GET_NODE_TYPE(tmp, type), i); \
+                    GENERIC_PRINT(tmp, i, type, p_print_func); \
                     *p_err = SUCCESS_CALL; break; \
                 } \
                 if (tmp->next == NULL) { \
@@ -72,14 +83,14 @@ struct glist {
             } while(1); \
         }
 
-#define GL_PRINT_ALL_NODES(p_head, type, p_err) \
+#define GL_PRINT_ALL_NODES(p_head, type, p_print_func, p_err) \
         if (p_head == NULL) { printf("[!] warn_info: null head, empty list.\n"); *p_err = NULL_HEAD_ERR; } \
         else { \
             struct glist *tmp = p_head; size_t i = 0; \
             do { \
-                GL_GET_NODE_TYPE(tmp, type)->print_elem_func(GL_GET_NODE_TYPE(tmp, type), i); \
+                GENERIC_PRINT(tmp, i, type, p_print_func); \
                 i++; tmp = tmp->next; \
-            } while(tmp != NULL); \
+            } while(tmp != NULL); *p_err = 0; \
         }
 
 #define GL_GET_NODE_NUM(p_head) ({ \
